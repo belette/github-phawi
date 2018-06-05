@@ -1,0 +1,85 @@
+<?php
+
+// ///////////////////////////////////////////////////////////////////////////////////////
+// ////// TEMPERATURE SONDE DHT22 Exterieur //////// /////////////////////////////////////
+// ///// Voir http://www.manuel-esteban.com/lire-une-sonde-dht22-avec-un-raspberry-pi/////
+// /////n'affiche que si le rï¿½sultat de la prise de temperature renvoi un format correct./
+// GESTION DU CHAUFFAGE  ///////////////////////////////////////////////////
+// Explication de la table chauffage :
+// "description" => Température détécté par la sonde 
+// "state" => (1/0) définis si le MODE chauffage est en marche. *** $StateThermostat
+// "lastActive" => (time() ) time() du dernier appel
+// "activated" => (1/0) = is running => 1 sii le chauffage chauffe a cet instant *** $TemperatureThermostatActivated
+// "notif" => Température de réglage du chauffage
+////////////////////////////////////////////////////////////////////////
+if ($forceChauffage == 14) {
+    
+} else {
+    $delai = 30;
+//sound(1);
+    // si réglage en auto activé : 
+    if ($chauffageAuto == 1 && $tempsDepuisThermostat > $delai) {
+        // si la temp est inferieur au réglage du chauffage et que le chauffage est etaind : 
+//sound(1);
+        if ($degre  < $TemperatureThermostat ) {
+            if ($StateThermostat == 0) {
+//		sound(5);
+                talk("Allumage automatique du chauffage. réglé à "+$TemperatureThermostat +" degrés." );
+                chauffage(1);
+                sendEmail("Le chauffage automatique vient d'être activé. température dans le salon :"+$degre+"/"+$TemperatureThermostat+"°C ", false, "PHAWI: Chauffage ON");
+                update("interface", array("value" => 1, "depuis" => time()), "id", "chauffage");
+            }
+        } else{
+            if ($StateThermostat == 1) {
+                // Si la température ammbiente est supérieure au chauffage 
+                // on coupe le chauffage:
+                talk("Extinction automatique du chauffage");
+                chauffage(0);
+                update("interface", array("value" => 0, "depuis" => time()), "id", "chauffage");
+            }
+        }
+    }
+}
+// lancer l'allumage automatique du chauffage si la temperature exterieure prévue 
+// est inferieur à 16 degrés.
+if($outdoorTemp < 17 && ($degre - $outdoorTemp) > 6 && $chauffageAuto != 1){
+     sendEmail("Activation du mode automatique du chauffage. Température exterieure prévue : "+$outdoorTemp+" °C ", false, "PHAWI: Chauffage ON");
+     update("interface", array("value" => 1), "id", "autoChauffage");
+}
+// display de la LED verte 
+if( $StateThermostat == 1){
+    gpio(23, 1);
+}
+else{
+    gpio(23, 0);
+}
+
+
+
+
+
+
+
+// sécuité un peu bidon contre les feux ou les problèmes de surchauffe : on alerte quand la temp
+// à l'interieur est > 31 degres (ca commence à chauffer déja !
+
+if ($degre > 31 && $degre < 40 && $degre > 41) {
+    sendEmail("ALERTE TEMPERATURE EXCESSIVE  : " . $degre . "C ! ", false, "PHAWI: Chauffage ALERTE");
+    update("interface", array("value" => 0, "depuis" => time()), "id", "chauffage");
+    chauffage(0);
+}
+
+
+// PARTIE couverture chauffante
+//COMMENT DURING SUMMER
+if ($tempsDepuisCouverture > $timerCouverture && $stateCouverture == "on") {
+//    talk("extinction de la couverture chauffante");
+//    couverture("off");
+}
+
+// Sécurité chauffage , si durée en marche trop longue. aprés 7200 seconde soit 2 heures.
+if ($StateThermostat == 1 && $tempsDepuisThermostat > 7200) {
+    // Execute("gpio write 6 0"); // Forcage au cas ou 
+    update("interface", array("value" => 0, "depuis" => time()), "id", "chauffage");
+    chauffage(0);
+}

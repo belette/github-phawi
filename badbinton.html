@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script>
+            score1 = 0;
+            score2 = 0;
+            whoPlay = 1;
+
+            $(document).ready(function () {
+
+
+            });
+
+            function subSetting() {
+
+                var J1name = document.getElementById("J1name").value;
+                var J2name = document.getElementById("J2name").value;
+                whoPlay = document.getElementById("whoStart").value;
+
+                if (J1name.length > 0 && J2name.length > 0) {
+                    // si les noms sont rentré;
+                    $("#setting").hide();
+                    $("#displayJ1name").html(J1name);
+                    $("#displayJ2name").html(J2name);
+                    $("#J1score").html(score1);
+                    $("#J2score").html(score2);
+                    $("#j" + whoPlay + "right").css("background-color", "aliceblue");
+                } else {
+                    alert("informations incompletes");
+                }
+            }
+
+            function refresh() {
+                $("#J1score").html(score1);
+                $("#J2score").html(score2);
+            }
+            function plusJ1() {
+                score1 = score1 + 1;
+                refresh();
+            }
+            function plusJ2() {
+                score2 = score2 + 1;
+                refresh();
+            }
+        </script>
+
+        <style>
+            *{
+                margin:0 auto;
+            }
+            #content{
+                background-color: grey;
+                width:100%;
+                height: 280px;
+                float: left;
+                color:white;
+            }
+            #setting{
+                position:fixed;
+                width:100%;
+                height: 280px;
+                z-index: 3;
+                background-color: lightblue ;
+                color:white;
+                text-align: center;
+
+            }
+            .playArea{
+                border:1px solid white;
+                height:140px;
+                width:49%;
+                float:left;
+            }
+            #j1left{
+                border-right: 4px dotted white;
+            }
+            #j1right{
+                border-right: 4px dotted white;
+            }
+
+            #j2left{
+
+            }
+            #j2right{
+
+            }
+            .displayName{
+                z-index: 2;
+                width: auto;
+                color: lightblue;
+                font-size: 2em;
+                text-align: center;
+                position: absolute;
+                top: 129px;
+                background: white;
+                padding: 1px 43px;
+                border-radius: 20px;
+            }
+            #displayJ2name{
+                right: 15%;
+            }
+            #displayJ1name{
+                left: 15%;
+            }
+            .plus{
+                color: #4f81bd;
+                background-color: white;
+                padding: 0 8px;
+                border-radius: 18px;
+                box-shadow: 0 0 12px grey;
+            }
+
+            #score{
+                z-index: 2;
+                width:100%;
+                bottom:0;
+                font-size: 2.5em;
+                position: absolute;
+                bottom:0;
+
+            }
+            .Jscore{
+                z-index: 2;
+                width: auto;
+                color: lightblue;
+                font-size: 1.5em;
+                text-align: center;
+                position: absolute;
+                bottom: -10px;
+            }
+            .scorepart{
+                float:left;
+                width:49%;
+                text-align: center;
+            }
+
+            .displayScore{
+                position: absolute;
+                top: 129px;
+                color: lightblue;
+                font-size: 2em;
+            }
+            #J1score{
+                right: 20%;
+            }
+            #J2score{
+                left: 19%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="setting">
+            <h2>Reglage</h2>
+            Joueur 1 : <input type="text" value="benoit" id="J1name" name="J1name" />
+            <br><br>
+            Joueur 2 : <input type="text" value="romain" id="J2name" name="J2name" />
+            <br><br>
+            <select name="whoStart" id="whoStart">
+                <option value="1">Joueur 1</option>
+                <option value="2">Joueur 2</option>
+            </select>
+            <input type="button" onclick="subSetting()" value="Let's go !"/>
+        </div>
+
+
+        <div id="content">
+            <div id="playground">
+                <div id="j1left" class="playArea"></div>
+                <div  class="displayName" id="displayJ1name"></div>
+                <div id="j2right" class="playArea"></div>
+
+                <div id="j1right" class="playArea"></div>
+                <div class="displayName" id="displayJ2name"></div>
+                <div id="j2left" class="playArea"></div>
+            </div>
+
+            <div id="score">
+                <div id="score1part" class="scorepart">
+                    <span class="Jscore" id="J1score"></span>
+                    <span onclick="plusJ1()" class="plus">+</span>
+                </div>
+
+                <div id="score2part" class="scorepart">
+                    <span onclick="plusJ2()" class="plus">+</span>
+                    <span class="Jscore" id="J2score"></span> 
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+</html>

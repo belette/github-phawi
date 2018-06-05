@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta content="text/html; charset=iso-8859-1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/> 
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+         <link rel="stylesheet" href="css/spin.css" type="text/css">
+        <link rel="stylesheet" href="css/icofont.css" type="text/css">
+        <!--        
+Pour optimiser le Json.json en cache et eviter de l'y mettre
+créer le fichier dans la conf apache2 et reload it. 
+https://technique.arscenic.org/lamp-linux-apache-mysql-php/apache-le-serveur-http/optimisations/article/expire-headers-->
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script>
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function checkCookie() {
+                 login = getCookie("PHAWIuser");
+                var mdp = getCookie("PHAWImdp");
+                
+                if (login != "" && mdp != "") {
+                    verifyCookie(login, mdp);
+                } else {
+                    alert("non autorise");
+                    document.location.href = ("inc_connexion.php");
+                }
+            }
+
+            function verifyCookie(login, mdp) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'get_json.php',
+                    data: {
+                        id: 'checkCookie',
+                        type: 'checkCookie',
+                        login: login,
+                        mdp: mdp
+                    },
+                    dataType: 'json'
+                }).done(function (data) {
+                    console.log(data);
+                    if (parseInt(data) > 0) {
+                        console.log("bienvenue " +login);
+                    } else {
+                        document.location.href = ("inc_connexion.php");
+                    }
+                });
+            }
+            checkCookie();
+        </script>
+         <script type="text/javascript" src="js/hammer.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+       
+        <title>P.H.A.W.I</title>     
+        <link rel="icon" type="image/png" href="img/piHomeIcon.png"/>
+        <link rel="shortcut icon" type="image/x-icon" href="img/piHomeIcon.png" />
+        <link rel="apple-touch-icon" href="img/iconiphone.png" />
+        <meta name="viewport" content="width=device-width"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="theme-color" content="rgba(0,0,0,0.6)">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+    
+    </head>
+    <body onload="init_screen('all');" id="body">
+       
+        <div class="panel" id="content">
+             <div id="nowPlaying"></div>
+             
+            
+            <div class="panel" id="contentInfo" class="refreshedContent"></div>
+            
+            <div class="panel" id="contentAction" class="refreshedContent"></div>
+
+         
+            
+            
+            
+            
+            
+            <div class="panel" id="contentPerso">
+                <br>
+                <div class="reglageCubeButton">
+                    </br>
+                    <p> <input onClick="ActionPerso('autre', 'croquette')" value="CROQUETTES" type="button" /></p>
+                     </br>
+                    <p> <input onClick="ActionPerso('autre', 'openFrontDoor')" value="Open The Front door" type="button" /></p>
+			 </br>
+                    <p> <input onClick="ActionPerso('autre', 'arrosage1')" value="Allumer arrosage" type="button" /></p>
+                    </br>
+                    <p> <input onClick="ActionPerso('autre', 'arrosage0')" value="Eteindre arrosage" type="button" /></p>
+			</br>
+                    <p> <input onClick="ActionPerso('autre', 'stopRadio')" value="Stop radio" type="button" /></p>
+                    <br>
+                    <p> <input onClick="ActionPerso('autre', 'stopAlarme')" value="Stop ALARME" type="button" /></p>
+                    <br>
+                    <p> <input onClick="ActionPerso('autre', 'histoCapture')" value="Historique capture" type="button" /></p>
+                </div>
+                <div id="return">   
+                </div>
+                <div id="message">   
+                </div>
+            </div>
+            
+            
+            
+            <div class="panel" id="contentReglage" class="refreshedContent"></div>
+           
+            
+            
+               <div class="panel" id="subsonicPanel">
+                <h2>Playlist:</h2>
+                <p> <input  class="subButton" onClick="sub('pause', '')" value="▩" type="button" /></p>
+                <p> <input   class="subButton"onClick="sub('play', '')" value="▶" type="button" /></p>
+                <br>
+                <p> <input class="subButton" onClick="sub('random', '')" value="⇄" type="button" /></p>
+                <p> <input  class="subButton" onClick="sub('recent', '')" value="récents" type="button" /></p>
+                <p> <input  class="subButton" onClick="sub('randomRecent', '')" value="Chanson random récents" type="button" /></p>
+                <br>
+                <p> <input  class="volButton" style="background-color:rgba(108, 188, 255,0.1);" onClick="sub('volume', '0')" value="0" type="button" />
+                    <input  class="volButton"  style="background-color:rgba(108, 188, 255,0.2);" onClick="sub('volume', '0.2')" value="20" type="button" />
+                    <input  class="volButton"  style="background-color:rgba(108, 188, 255,0.4);" onClick="sub('volume', '0.4')" value="40" type="button" />
+                    <input  class="volButton"   style="background-color:rgba(108, 188, 255,0.5);" onClick="sub('volume', '0.5')" value="50" type="button" />
+                    <input  class="volButton"  style="background-color:rgba(108, 188, 255,0.7);" onClick="sub('volume', '0.7')" value="70" type="button" />
+                    <input  class="volButton"  style="background-color:rgba(108, 188, 255,0.9);" onClick="sub('volume', '0.9')" value="90" type="button" />
+                    <input  class="volButton"  style="background-color:rgba(108, 188, 255,1);" onClick="sub('volume', '1')" value="100" type="button" />
+                </p>
+                <div id="playlistPanel"></div>
+            </div>
+            
+            
+            <div class="panel" id="contentCapture" >
+                <p> <input onClick="ActionPerso('autre', 'capture')" value="capture:" type="button" /></p>
+                <div id="capture"></div>
+                <p> <input onClick="stopCapture()" value="Stop" type="button" /></p>
+                <br>
+            </div>
+            
+            
+            
+             <div class="panel" id="note">
+                 <span onclick="closeNote()">fermer</span>
+                <br>
+                <div id="displayNote">
+                </div>
+                <br>
+                <form class="formNote">
+                    <label>Titre</label>
+                    <input type="text" name="titre" id="inputTitre"  value=""/><br><br>
+                    <label>Note</label>
+                    <textarea name="content" id="inputContent" />
+                    </textarea>
+                    <br><br>
+                    <input onClick="subNote('insert','')" value="Enregistrer" type="button" />
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

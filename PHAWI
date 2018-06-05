@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Apres cette ligne les commandes seront executees systematiquement
+
+# ...
+
+# Apres cette ligne les commandes executees en fonction du parametre passe en ligne de commande
+
+case "$1" in
+
+    start)
+
+        # Commandes executees avec le parametre start (celui lors du boot)
+         sudo python /var/www/html/longTask.py >> /var/www/html/logCron.log 2>&1
+        ;;
+
+    stop)
+
+        # Commandes executees avec le parametre stop (celui lors de l'arret du systeme)
+        sudo killall python
+        ;;
+
+    reload|restart)
+
+        $0 stop
+
+        $0 start
+
+        ;;
+
+    *)
+
+        echo "Usage: $0 start|stop|restart|reload"
+
+        exit 1
+
+esac
+
+exit 0

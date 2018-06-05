@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1404.47">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 16.0px 0.0px; line-height: 14.9px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 16.0px 0.0px; line-height: 14.9px; font: 13.0px Tahoma; color: #4f81bd; -webkit-text-stroke: #4f81bd}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.9px; font: 13.0px Tahoma; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 16.0px 0.0px; line-height: 16.4px; font: 15.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Courier; color: #000000; -webkit-text-stroke: #000000}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Courier; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 15.0px Times; color: #000000; -webkit-text-stroke: #000000; min-height: 18.0px}
+    p.p8 {margin: 0.0px 0.0px 16.0px 0.0px; line-height: 16.4px; font: 13.0px Tahoma; color: #4f81bd; -webkit-text-stroke: #4f81bd}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 15.0px; font: 13.0px 'Courier New'; color: #000000; -webkit-text-stroke: #000000}
+    p.p10 {margin: 0.0px 0.0px 0.0px 47.2px; text-indent: -47.2px; line-height: 14.9px; font: 13.0px Tahoma; color: #000000; -webkit-text-stroke: #000000}
+    p.p11 {margin: 0.0px 0.0px 16.0px 0.0px; line-height: 16.4px; font: 15.0px Times; color: #4f81bd; -webkit-text-stroke: #4f81bd}
+    span.s1 {font: 13.0px Tahoma; font-kerning: none; color: #4f81bd; -webkit-text-stroke: 0px #4f81bd}
+    span.s2 {font: 15.0px Times; font-kerning: none; background-color: #c0c0c0}
+    span.s3 {font: 15.0px Times; font-kerning: none}
+    span.s4 {font-kerning: none}
+    span.s5 {font-kerning: none; background-color: #c0c0c0}
+    span.s6 {font: 15.0px Times; font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><b>0) Installer la clef wifi: <br>
+            il faut installer wicd-curses: <br>
+</b></span><span class="s2">sudo apt-get install wicd-curses </span><span class="s3"><br>
+</span><span class="s4"><b>on édite passerelle 192.168.0.254<br>
+                Masque de sous reseau : 255.255.255.0<br>
+                [x] DNS global</b></span></p>
+<p class="p2"><span class="s4"><b>1)        Installer apache 2 :</b></span></p>
+<p class="p3"><span class="s5">sudo apt-get install apache2</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p4"><span class="s4"><b>Installer curl :<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p5"><span class="s4">sudo apt-get install php5-curl</span></p>
+<p class="p6"><span class="s4"></span><br></p>
+<p class="p7"><span class="s4"></span><br></p>
+<p class="p2"><span class="s4"><b>2)        Installer PHP5 :</b></span></p>
+<p class="p3"><span class="s5">sudo apt-get install php5</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p8"><span class="s6"><b>3)</b></span><span class="s4"><b>         Changer son mot de passe ROOT :</b></span><span class="s6"><b><span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">sudo passwd root</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>4)        Transférer les fichier php dans le répertoire /var/www/ (penser a changer les droit d’accès en 755.</b></span></p>
+<p class="p2"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>4*) On met les droits à pi pour exécuter le sudo :</b></span></p>
+<p class="p3"><span class="s5">Visudo</span><span class="s4"><span class="Apple-converted-space"> </span></span></p>
+<p class="p9"><span class="s4"><b>Puis on édite le profile :<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">www-data ALL=(ALL) NOPASSWD: ALL</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>5)        Changer le droit d’accès au fichier radio :</b></span></p>
+<p class="p3"><span class="s5">sudo chown root:www-data /var/www/radioEmission</span></p>
+<p class="p4"><span class="s4"><b>et</b></span></p>
+<p class="p3"><span class="s5">sudo chmod 4777 /var/www/radioEmission</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>6)        Installer phpmyAdmin :</b></span></p>
+<p class="p3"><span class="s5">sudo aptitude install mysql-server php5-mysql</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>7)        Installer Nmap:<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">apt-get install nmap</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>8)        Install du driver pour la piCam:</b></span></p>
+<p class="p10"><span class="s5">Apt-get install raspistill</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>9)        Installation du son :<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">Sudo apt-get install mpg321</span></p>
+<p class="p4"><span class="s4"><b> </b></span></p>
+<p class="p2"><span class="s4"><b>10)      Création de la clef de securite ssl :<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">sudo mkdir /etc/apache2/ssl</span></p>
+<p class="p4"><span class="s4"><b>on génère la clef :<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">sudo openssl req -x509 -nodes -days 1095 -newkey rsa:2048 -out /etc/apache2/ssl/server.crt -keyout /etc/apache2/ssl/server.key</span></p>
+<p class="p4"><span class="s4"><b>Le Common Name, est important, il doit être l’ip ou le ndd du Raspberry pi.</b></span></p>
+<p class="p3"><span class="s5">sudo a2enmod ssl</span></p>
+<p class="p4"><span class="s4"><b>Ensuite création du lien symbolique :</b></span></p>
+<p class="p3"><span class="s5">sudo ln -s /etc/apache2/sites-available/default-ssl /etc/apache2/sites-enabled/000-default-ssl</span></p>
+<p class="p4"><span class="s4"><b>On met le port dans les sites enable :</b></span></p>
+<p class="p3"><span class="s5">sudo nano /etc/apache2/sites-enabled/000-default-ssl</span><span class="s4"><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s4"><b>et on y change les </b>deux<b> lignes :<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">SSLCertificateFile    /etc/apache2/ssl/server.crt</span></p>
+<p class="p3"><span class="s5">SSLCertificateKeyFile /etc/apache2/ssl/server.key</span></p>
+<p class="p4"><span class="s4"><b>Puis enfin on redémarre le serveur Apache2 ;</b></span></p>
+<p class="p3"><span class="s5">sudo /etc/init.d/apache2 restart</span></p>
+<p class="p11"><span class="s4"><b><i>11) Installation des wiring pi</i></b></span></p>
+<p class="p3"><span class="s5">sudo apt-get install git-core</span></p>
+<p class="p4"><span class="s4"><b>Si erreur faire :<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">sudo apt-get update</span></p>
+<p class="p3"><span class="s5">sudo apt-get upgrade</span></p>
+<p class="p4"><span class="s4"><b>ensuite faire:<span class="Apple-converted-space"> </span></b></span></p>
+<p class="p3"><span class="s5">git clone git://git.drogon.net/wiringPi</span></p>
+<p class="p3"><span class="s5">cd wiringPi</span></p>
+<p class="p3"><span class="s5">git pull origin</span></p>
+<p class="p4"><span class="s4"><b>Puis on compile et installe la library:</b></span></p>
+<p class="p3"><span class="s5">cd wiringPi</span></p>
+<p class="p3"><span class="s5">./build</span></p>
+<p class="p3"><span class="s4"> </span></p>
+</body>
+</html>
